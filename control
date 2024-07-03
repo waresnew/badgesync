@@ -2,7 +2,7 @@ Package: com.newwares.badgesync
 Name: BadgeSync
 Version: 1.0.0
 Architecture: iphoneos-arm
-Description: Decrements icon badge values accordingly when notifications are cleared from the notification centre.
+Description: Syncs icon badge values when notifications are dismissed from the notification centre.
 Maintainer: newwares
 Author: newwares
 Section: Tweaks
