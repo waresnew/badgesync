@@ -1,0 +1,44 @@
+name: Build NewABI
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Cache Theos
+        uses: actions/cache@main
+        with:
+          path: theos
+          key: theos
+      - name: Checkout theos/theos
+        if: steps.cache-theos.outputs.cache-hit != 'true'
+        uses: actions/checkout@main
+        with:
+          repository: theos/theos
+          ref: master
+          submodules: recursive
+          path: theos
+
+      - name: Checkout theos/sdks
+        if: steps.cache-theos.outputs.cache-hit != 'true'
+        uses: actions/checkout@main
+        with:
+          repository: theos/sdks
+          sparse-checkout: iPhoneOS16.5.sdk
+          path: theos/sdks
+      - name: Install Build Dependencies
+        run: |
+          brew install make xz ldid
+      - name: Build Package
+        run: |
+          export THEOS=theos
+          gmake clean package FINALPACKAGE=1
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: packages/*.deb

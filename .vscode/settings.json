@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.h": "objc"
+    },
+    "cmake.configureOnOpen": true
+}
