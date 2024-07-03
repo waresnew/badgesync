@@ -1,9 +1,9 @@
 Package: com.newwares.badgesync
 Name: BadgeSync
-Version: 0.0.1
+Version: 1.0.0
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
+Description: Decrements icon badge values accordingly when notifications are cleared from the notification centre.
 Maintainer: newwares
 Author: newwares
 Section: Tweaks
-Depends: mobilesubstrate (>= 0.9.5000), firmware (>= 15.0)
+Depends: mobilesubstrate (>= 0.9.5000), firmware (>= 16.0)

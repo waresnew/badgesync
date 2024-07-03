@@ -1,23 +1,29 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@interface PLPlatterActionButton : UIControl
+@interface NCNotificationRequest : NSObject
+@property NSString* sectionIdentifier; // eg. com.apple.MobileSMS
 @end
 
-%hook PLPlatterActionButton
-    - (void)sendAction:(id)arg1 {
-        NSMutableArray* targetActions = MSHookIvar<NSMutableArray*>(self, "_targetActions");
-        if (targetActions.count > 0) {
-            id targetAction = targetActions[0];
-            UIAction* handler = MSHookIvar<UIAction*>(targetAction, "_actionHandler");
-            if ([handler.title isEqualToString:@"Clear"]) {
-                NSLog(@"Clear Button pressed");
-            }
-        } else {
-            NSLog(@"Button pressed");
-        }
+@interface SBApplicationController : NSObject
++ (id)sharedInstance;
+- (id)applicationWithBundleIdentifier:(NSString*)identifier; //eg. com.apple.MobileSMS
+@end
 
+@interface SBApplication : NSObject
+@property NSString* badgeValue; // nil if no badge
+- (void) setBadgeValue:(NSString*)value;
+@end
+
+%hook NCNotificationStructuredListViewController // will be called in bursts if multiple notifs of an app are cleared at once
+    - (void)removeNotificationRequest:(NCNotificationRequest*)notif {
+        SBApplicationController* applicationController = [%c(SBApplicationController) sharedInstance];
+        SBApplication* app = [applicationController applicationWithBundleIdentifier:notif.sectionIdentifier];
+        if (app) {
+            NSInteger newBadgeValue = [[app badgeValue] integerValue]-1;
+            [app setBadgeValue:newBadgeValue > 0? [@(newBadgeValue) stringValue]:nil];
+            NSLog(@"Notification removed: arg1 is %@, new badgevalue is %ld", notif, (long) newBadgeValue);
+        }
         %orig;
-        
     }
 %end

@@ -1,4 +1,4 @@
-name: Build NewABI
+name: Build for NewABI
 
 on:
   push:
