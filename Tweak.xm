@@ -21,7 +21,6 @@
         if (app) {
             NSInteger newBadgeValue = [[app badgeValue] integerValue]-1;
             [app setBadgeValue:newBadgeValue > 0? [@(newBadgeValue) stringValue]:nil];
-            NSLog(@"Notification removed: arg1 is %@, new badgevalue is %ld", notif, (long) newBadgeValue);
         }
         %orig;
     }
