@@ -12,7 +12,7 @@ Supports tapping the "Clear" button, swiping left to clear, and clearing all not
 
 Just install it and it'll work!
 
-[![YouTube](http://i.ytimg.com/vi/kaMF8HQP-_s/hqdefault.jpg)](https://www.youtube.com/watch?v=kaMF8HQP-_s)
+https://github.com/waresnew/badgesync/assets/45801973/3a772e64-3f96-421b-8c74-f389962bf1e0
 
 ### Limitations
 
