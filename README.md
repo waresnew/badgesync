@@ -1,5 +1,7 @@
 # BadgeSync
 
+[<img src="https://docs.havoc.app/img/badges/get_square.png" width=15% height=15%>](https://havoc.app/package/badgesync)
+
 Syncs icon badge values when you dismiss notifications from the notification center!
 
 Normally, dismissing a notification will keep the badge value the same, requiring you to manually open and close the app to clear its badge count. With this tweak, if you clear 1 notification, the badge value will decrease by 1; if you clear all notifications for an app, then its badge will disappear.
