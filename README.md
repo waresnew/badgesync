@@ -1,6 +1,10 @@
-# BadgeSync
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/7c1dfd00-1608-4517-b586-6b457e9abe41" width="128px" height="128px">
+</p>
+<h1 align="center">BadgeSync</h1>
 
 [<img src="https://docs.havoc.app/img/badges/get_square.png" width=15% height=15%>](https://havoc.app/package/badgesync)
+
 
 Syncs icon badge values when you dismiss notifications from the notification center!
 
@@ -15,11 +19,6 @@ Supports tapping the "Clear" button, swiping left to clear, and clearing all not
 Just install it and it'll work!
 
 https://github.com/waresnew/badgesync/assets/45801973/3a772e64-3f96-421b-8c74-f389962bf1e0
-
-### Limitations
-
-- For some apps such as iMessage and Gmail, if you clear notifications from the notification center, re-open the app, leave the messages/emails unread, and return to the homescreen, then the badge value will revert.
-    - This probably requires specific logic for each app to mark messages as read, which would be infeasible since there are so many apps.
 
 ### Bugs
 
