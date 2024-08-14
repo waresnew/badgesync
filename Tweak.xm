@@ -1,51 +1,58 @@
-#import <Foundation/Foundation.h>
-#import <HBLog.h>
-//UNUserNotificationServiceConnection, UNUserNotificationCenter didn't work
-//didRemoveNotificationRequest is for tap clear and swipe
-//requestsClearingPresentables is for all in a group
+#import <Tweak.h>
 
-@interface NCNotificationRequest : NSObject
-@property NSString* sectionIdentifier; // eg. com.apple.MobileSMS
-@end
+NCNotificationStructuredListViewController* notifController;
 
-@interface SBApplicationController : NSObject
-+ (id)sharedInstance;
-- (id)applicationWithBundleIdentifier:(NSString*)identifier; //eg. com.apple.MobileSMS
-@end
-
-@interface SBApplication : NSObject
-@property NSString* badgeValue; // nil if no badge
-- (void) setBadgeValue:(NSString*)value;
-@end
-
-@interface NCNotificationGroupList : NSObject
-@end
-
-@interface NCNotificationMasterList : NSObject
-@end
-
-void badgeDecrement(NCNotificationRequest* notif) {
-    SBApplicationController* applicationController = [%c(SBApplicationController) sharedInstance];
-    SBApplication* app = [applicationController applicationWithBundleIdentifier:notif.sectionIdentifier];
-    if (app) {
-        NSInteger newBadgeValue = [[app badgeValue] integerValue]-1;
-        [app setBadgeValue:newBadgeValue > 0? [@(newBadgeValue) stringValue]:nil];
-        NSLog(@"Notification removed: app is %@, new badgevalue is %ld", notif.sectionIdentifier, (long) newBadgeValue);
+NSString* badgeSync(NSString* bundleIdentifier) {
+    NSMutableArray<NCNotificationRequest*>* notifs = [NSMutableArray new];
+    NCNotificationMasterList* masterList = [notifController masterList];
+    for(NCNotificationStructuredSectionList* section in [masterList notificationSections]) {
+        [notifs addObjectsFromArray:[section allNotificationRequests]];
     }
+    NSInteger count = 0;
+    for (NCNotificationRequest* n in notifs) {
+        if ([n.sectionIdentifier isEqualToString:bundleIdentifier]) {
+            count++;
+        }
+    }
+    return count==0?nil:[@(count) stringValue];
 }
+
+SBApplication* getApp(NSString* bundleIdentifier) {
+    SBApplicationController* applicationController = [%c(SBApplicationController) sharedInstance];
+    return [applicationController applicationWithBundleIdentifier:bundleIdentifier];
+}
+
+%hook SBApplication
+    -(void)setBadgeValue:(NSString*)value {
+        NSString* bundleIdentifier = [self bundleIdentifier];
+        NSString* result = badgeSync(bundleIdentifier);
+        NSLog(@"SETTER: App: %@, BadgeValue: %@", bundleIdentifier, result);
+        %orig(result); //likely %orig() does some extra stuff to repaint the badge
+    }
+%end
 
 %hook NCNotificationStructuredListViewController
     -(void)notificationListBaseComponent:(NCNotificationGroupList*)groupList requestsClearingPresentables:(NSArray*)notifs {
+        %orig; //run orig before to update masterlist
         for (NCNotificationRequest* notif in notifs) {
             NSLog(@"ClearAll: %@", notif.sectionIdentifier);
-            badgeDecrement(notif);
+            [getApp(notif.sectionIdentifier) setBadgeValue:nil]; // arg doesn't matter here, this is just to call badgeSync() and repaint
         }
-        %orig;
     }
     -(void)notificationListComponent:(NCNotificationMasterList*)notifList didRemoveNotificationRequest:(NCNotificationRequest*)notif {
-        NSLog(@"ClearOne: %@", notif.sectionIdentifier);
-        badgeDecrement(notif);
         %orig;
+        NSLog(@"ClearOne: %@", notif.sectionIdentifier);
+        [getApp(notif.sectionIdentifier) setBadgeValue:nil];
+    }
+    -(void)insertNotificationRequest:(NCNotificationRequest*)notif {
+        %orig;
+        NSLog(@"Insert: %@", notif.sectionIdentifier);
+        [getApp(notif.sectionIdentifier) setBadgeValue:nil];
+    }
+    -(id)init {
+        self = %orig;
+        notifController = self;
+        return self;
     }
 %end
 
