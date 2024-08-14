@@ -8,9 +8,10 @@ NSString* badgeSync(NSString* bundleIdentifier) {
     for(NCNotificationStructuredSectionList* section in [masterList notificationSections]) {
         [notifs addObjectsFromArray:[section allNotificationRequests]];
     }
+
     NSInteger count = 0;
-    for (NCNotificationRequest* n in notifs) {
-        if ([n.sectionIdentifier isEqualToString:bundleIdentifier]) {
+    for (NCNotificationRequest* notif in notifs) {
+        if ([notif.sectionIdentifier isEqualToString:bundleIdentifier]) {
             count++;
         }
     }
