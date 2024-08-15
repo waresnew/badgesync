@@ -24,7 +24,7 @@ SBApplication* getApp(NSString* bundleIdentifier) {
 }
 
 %hook SBApplication
-    -(void)setBadgeValue:(NSString*)value {
+    -(void)setBadgeValue:(NSString*)value { //hook setBadgeValue to prevent apps from reverting badgecount, safe to spam call
         NSString* bundleIdentifier = [self bundleIdentifier];
         NSString* result = badgeSync(bundleIdentifier);
         NSLog(@"SETTER: App: %@, BadgeValue: %@", bundleIdentifier, result);
@@ -33,17 +33,10 @@ SBApplication* getApp(NSString* bundleIdentifier) {
 %end
 
 %hook NCNotificationStructuredListViewController
-    -(void)notificationListBaseComponent:(NCNotificationGroupList*)groupList requestsClearingPresentables:(NSArray*)notifs {
+    - (void)removeNotificationRequest:(NCNotificationRequest*)notif { // will be called in bursts if multiple notifs of an app are cleared at once
         %orig; //run orig before to update masterlist
-        for (NCNotificationRequest* notif in notifs) {
-            NSLog(@"ClearAll: %@", notif.sectionIdentifier);
-            [getApp(notif.sectionIdentifier) setBadgeValue:nil]; // arg doesn't matter here, this is just to call badgeSync() and repaint
-        }
-    }
-    -(void)notificationListComponent:(NCNotificationMasterList*)notifList didRemoveNotificationRequest:(NCNotificationRequest*)notif {
-        %orig;
-        NSLog(@"ClearOne: %@", notif.sectionIdentifier);
-        [getApp(notif.sectionIdentifier) setBadgeValue:nil];
+        NSLog(@"Remove: %@", notif.sectionIdentifier);
+        [getApp(notif.sectionIdentifier) setBadgeValue:nil]; // arg doesn't matter here, this is just to call badgeSync() and repaint
     }
     -(void)insertNotificationRequest:(NCNotificationRequest*)notif {
         %orig;
@@ -55,6 +48,7 @@ SBApplication* getApp(NSString* bundleIdentifier) {
         notifController = self;
         return self;
     }
+
 %end
 
 

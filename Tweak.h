@@ -17,6 +17,7 @@
 @end
 
 @interface NCNotificationGroupList : NSObject
+@property NSMutableArray<NCNotificationRequest*>* orderedRequests;
 @end
 
 @interface NCNotificationMasterList : NSObject
