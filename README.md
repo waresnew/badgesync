@@ -8,7 +8,9 @@
 
 Syncs icon badge values when you dismiss notifications from the notification center!
 
-Normally, dismissing a notification will keep the badge value the same, requiring you to manually open and close the app to clear its badge count. With this tweak, if you clear 1 notification, the badge value will decrease by 1; if you clear all notifications for an app, then its badge will disappear.
+Normally, dismissing a notification will keep the badge value the same, requiring you to manually open and close the app to clear its badge count. With this tweak, when you dismiss a notification, the badge count automatically updates to reflect the remaining notifications.
+
+> eg. You have 5 iMessage notifications so the badge for iMessage is at 5. If you clear 1 notification from iMessage, then the badge value becomes 4 (and so on).
 
 This way, you can manage your notifications solely from the notification center without needing to manually clear your badges as well.
 
