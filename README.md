@@ -22,16 +22,6 @@ Just install it and it'll work!
 
 https://github.com/waresnew/badgesync/assets/45801973/3a772e64-3f96-421b-8c74-f389962bf1e0
 
-### Caveat for Some Users
-
-This tweak aims to keep the badge count synced with the notification center. That means if you have a high badge count from an app prior to installing the tweak, the next notification you receive from that app will adjust the badge count to match the notifications currently in the notification center.
-
-If you like having a high badge count, you can uninstall the tweak and it'll be restored.
-
-> eg. You have an app that has accumlated a high badge count (let's say 1000) prior to installing this tweak, but there are no notifications from it in the notification centre (because they were dismissed without syncing)
-
-> Once you install this tweak and you receive another notification from that app, it'll reset to 1. If you uninstall this tweak, then it'll restore the original badge count of 1000.
-
 ### Bugs
 
 If you encounter any bugs, feel free to open an [issue](https://github.com/waresnew/badgesync/issues).
