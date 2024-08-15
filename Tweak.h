@@ -31,3 +31,21 @@
 @interface NCNotificationStructuredSectionList : NSObject
 - (NSArray*)allNotificationRequests;
 @end
+
+@interface BBSectionInfoSettings : NSObject
+@property BOOL showsInNotificationCenter; //notif centre
+@property BOOL showsInLockScreen; //Lockscreen
+@property BOOL allowsNotifications;
+@property NSUInteger alertType; //0 for no Banners at all, 1 for temporary Banners, 2 for persistent
+@end
+
+@interface BBSectionInfo : NSObject
+{
+    NSMutableDictionary* _sectionInfoByID;
+}
+@property BBSectionInfoSettings* readableSettings;
+@end
+
+@interface BBServer : NSObject
++(NSMutableDictionary*)savedSectionInfo;
+@end

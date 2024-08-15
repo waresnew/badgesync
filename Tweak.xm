@@ -23,9 +23,23 @@ SBApplication* getApp(NSString* bundleIdentifier) {
     return [applicationController applicationWithBundleIdentifier:bundleIdentifier];
 }
 
+BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for apps that don't show notifs
+    BBSectionInfo* sectionInfo = [%c(BBServer) savedSectionInfo][bundleIdentifier];
+    if (!sectionInfo) {
+        return NO;
+    }
+    BBSectionInfoSettings* notifSettings = [sectionInfo readableSettings];
+    return [notifSettings allowsNotifications] && ([notifSettings showsInNotificationCenter] || [notifSettings showsInLockScreen]); //banners don't popup in masterlist
+}
+
 %hook SBApplication
     -(void)setBadgeValue:(NSString*)value { //hook setBadgeValue to prevent apps from reverting badgecount, safe to spam call
         NSString* bundleIdentifier = [self bundleIdentifier];
+        if (!notifCentreEnabled(bundleIdentifier)) {
+            NSLog(@"SETTER: App: %@; notif centre disabled, skipping", bundleIdentifier);
+            %orig;
+            return;
+        }
         NSString* result = badgeSync(bundleIdentifier);
         NSLog(@"SETTER: App: %@, BadgeValue: %@", bundleIdentifier, result);
         %orig(result); //likely %orig() does some extra stuff to repaint the badge
