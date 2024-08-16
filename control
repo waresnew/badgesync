@@ -6,4 +6,4 @@ Description: Syncs icon badge values when notifications are dismissed from the n
 Maintainer: newwares
 Author: newwares
 Section: Tweaks
-Depends: mobilesubstrate (>= 0.9.5000), firmware (>= 16.0)
+Depends: mobilesubstrate, firmware (>= 14.0)

@@ -28,7 +28,10 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: theos/sdks
-          sparse-checkout: iPhoneOS16.5.sdk
+          sparse-checkout: |
+            iPhoneOS16.5.sdk
+            iPhoneOS15.6.sdk
+            iPhoneOS14.5.sdk
           path: theos/sdks
       - name: Install Build Dependencies
         run: |
@@ -37,8 +40,9 @@ jobs:
         run: |
           export THEOS=theos
           gmake clean package FINALPACKAGE=1
+          gmake clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
-      - name: Upload a Build Artifact
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           path: packages/*.deb
