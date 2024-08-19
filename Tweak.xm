@@ -34,7 +34,7 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
 }
 
 %hook SBApplication
-    -(void)setBadgeValue:(NSString*)value { //hook setBadgeValue to prevent apps from reverting badgecount, safe to spam call
+    -(void)setBadgeValue:(id)value { //either nsnumber or nsstring //hook setBadgeValue to prevent apps from reverting badgecount, safe to spam call
         NSString* bundleIdentifier = [self bundleIdentifier];
         NSString* curValue = [value isKindOfClass:[NSString class]]?value:[value stringValue];
         if ([blacklist containsObject:bundleIdentifier]) {

@@ -13,7 +13,7 @@
 @interface SBApplication : NSObject
 @property NSString* badgeValue; // nil if no badge
 @property NSString* bundleIdentifier;
-- (void) setBadgeValue:(NSString*)value;
+- (void) setBadgeValue:(id)value;
 @end
 
 @interface NCNotificationGroupList : NSObject
