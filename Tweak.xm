@@ -1,7 +1,7 @@
 #import <Tweak.h>
 
 NCNotificationStructuredListViewController* notifController;
-NSArray* blacklist;
+NSArray<NSString*>* blacklist;
 
 NSString* badgeSync(NSString* bundleIdentifier) {
     NSMutableArray<NCNotificationRequest*>* notifs = [NSMutableArray new];
@@ -36,6 +36,11 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
 %hook SBApplication
     -(void)setBadgeValue:(NSString*)value { //hook setBadgeValue to prevent apps from reverting badgecount, safe to spam call
         NSString* bundleIdentifier = [self bundleIdentifier];
+        if ([blacklist containsObject:bundleIdentifier]) {
+            NSLog(@"SETTER: App: %@; blacklisted, skipping", bundleIdentifier);
+            %orig;
+            return;
+        }
         if (!notifCentreEnabled(bundleIdentifier)) {
             NSLog(@"SETTER: App: %@; notif centre disabled, skipping", bundleIdentifier);
             %orig;
@@ -67,10 +72,10 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
 %end
 
 static void preferencesChanged() {
-    NSUserDefaults *const prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.newwares.badgesyncprefs"];
-
+    NSUserDefaults* const prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.newwares.badgesyncprefs"];
 	blacklist = [prefs objectForKey:@"enabledApps"]?:@[];
     NSLog(@"Blacklist: %@", blacklist);
+    [prefs release];
 }
 
 %ctor {
