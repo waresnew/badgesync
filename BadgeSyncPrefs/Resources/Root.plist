@@ -37,7 +37,7 @@
                     </dict>
                 </array>
                 <key>label</key>
-                <string>Enabled apps</string>
+                <string>Enabled Apps</string>
                 <key>useSearchBar</key>
                 <true />
             </dict>

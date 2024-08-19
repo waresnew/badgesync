@@ -1,8 +1,8 @@
 #import <Preferences/PSListController.h>
-#import <CepheiPrefs/HBRootListController.h>
+#import <CepheiPrefs/HBListController.h>
 #import <Cephei/HBRespringController.h>
 #import "AltList/AltList.h"
 
-@interface BGSRootListController : PSListController
+@interface BGSRootListController : HBListController
 
 @end
