@@ -21,6 +21,8 @@
                 <string>PSLinkListCell</string>
                 <key>subtitle</key>
                 <string>Sync badges for these apps</string>
+                <key>defaults</key>
+                <string>com.newwares.badgesyncprefs</string>
                 <key>detail</key>
                 <string>ATLApplicationListMultiSelectionController</string>
                 <key>key</key>
