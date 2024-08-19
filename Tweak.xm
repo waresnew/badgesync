@@ -43,7 +43,9 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
         }
         if (!notifCentreEnabled(bundleIdentifier)) {
             NSLog(@"SETTER: App: %@; notif centre disabled, skipping", bundleIdentifier);
-            %orig;
+            if (![value isEqualToString:@"BadgeSync"]) { //organic call
+                %orig;
+            }
             return;
         }
         NSString* result = badgeSync(bundleIdentifier);
@@ -56,12 +58,12 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
     - (void)removeNotificationRequest:(NCNotificationRequest*)notif { // will be called in bursts if multiple notifs of an app are cleared at once
         %orig; //run orig before to update masterlist
         NSLog(@"Remove: %@", notif.sectionIdentifier);
-        [getApp(notif.sectionIdentifier) setBadgeValue:nil]; // arg doesn't matter here, this is just to call badgeSync() and repaint
+        [getApp(notif.sectionIdentifier) setBadgeValue:@"BadgeSync"]; // arg doesn't matter here (but make it unique so i can cancel it later), this is just to call badgeSync() and repaint
     }
     -(void)insertNotificationRequest:(NCNotificationRequest*)notif {
         %orig;
         NSLog(@"Insert: %@", notif.sectionIdentifier);
-        [getApp(notif.sectionIdentifier) setBadgeValue:nil];
+        [getApp(notif.sectionIdentifier) setBadgeValue:@"BadgeSync"];
     }
     -(id)init {
         self = %orig;
