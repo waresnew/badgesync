@@ -75,7 +75,6 @@ static void preferencesChanged() {
     NSUserDefaults* const prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.newwares.badgesyncprefs"];
 	blacklist = [prefs objectForKey:@"enabledApps"]?:@[];
     NSLog(@"Blacklist: %@", blacklist);
-    [prefs release];
 }
 
 %ctor {
