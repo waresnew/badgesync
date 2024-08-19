@@ -15,7 +15,7 @@
 		<key>isController</key>
 		<true/>
 		<key>label</key>
-		<string>BadgeSyncPrefs</string>
+		<string>BadgeSync</string>
 	</dict>
 </dict>
 </plist>
