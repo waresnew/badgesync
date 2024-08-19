@@ -3,6 +3,6 @@
 #import <Cephei/HBRespringController.h>
 #import "AltList/AltList.h"
 
-@interface BGSRootListController : HBRootListController
+@interface BGSRootListController : PSListController
 
 @end
