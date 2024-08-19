@@ -3,8 +3,9 @@
 </p>
 <h1 align="center">BadgeSync</h1>
 
-[<img src="https://docs.havoc.app/img/badges/get_square.png" width=15% height=15%>](https://havoc.app/package/badgesync)
+![Build Workflow](https://github.com/waresnew/badgesync/actions/workflows/build.yml/badge.svg)
 
+[<img src="https://docs.havoc.app/img/badges/get_square.png" width=15% height=15%>](https://havoc.app/package/badgesync)
 
 Syncs icon badge values when you dismiss notifications from the notification center!
 
