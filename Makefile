@@ -10,7 +10,7 @@ TWEAK_NAME = BadgeSync
 
 BadgeSync_FILES = Tweak.xm
 BadgeSync_CFLAGS = -fobjc-arc
-BadgeSync_EXTRA_FRAMEWORKS += Cephei AltList
+BadgeSync_EXTRA_FRAMEWORKS += Cephei
 
 include $(THEOS_MAKE_PATH)/tweak.mk
 SUBPROJECTS += BadgeSyncPrefs

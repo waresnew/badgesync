@@ -26,7 +26,7 @@
                 <key>detail</key>
                 <string>ATLApplicationListMultiSelectionController</string>
                 <key>key</key>
-                <string>enabledapps</string>
+                <string>enabledApps</string>
                 <key>defaultApplicationSwitchValue</key>
                 <true />
                 <key>sections</key>
@@ -40,6 +40,8 @@
                 <string>Enabled Apps</string>
                 <key>useSearchBar</key>
                 <true />
+                <key>PostNotification</key>
+                <string>com.newwares.badgesyncprefs/ReloadPrefs</string>
             </dict>
             <dict>
                 <key>cellClass</key>

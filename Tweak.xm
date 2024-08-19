@@ -1,6 +1,7 @@
 #import <Tweak.h>
 
 NCNotificationStructuredListViewController* notifController;
+NSArray* blacklist;
 
 NSString* badgeSync(NSString* bundleIdentifier) {
     NSMutableArray<NCNotificationRequest*>* notifs = [NSMutableArray new];
@@ -65,6 +66,16 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
 
 %end
 
+static void preferencesChanged() {
+    NSUserDefaults *const prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.newwares.badgesyncprefs"];
 
+	blacklist = [prefs objectForKey:@"enabledApps"]?:@[];
+    NSLog(@"Blacklist: %@", blacklist);
+}
+
+%ctor {
+    preferencesChanged();
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)preferencesChanged, CFSTR("com.newwares.badgesyncprefs/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+}
 
 
