@@ -56,6 +56,7 @@ jobs:
           cp ./AltList/*.h $THEOS/include/AltList
       - name: Build Package
         run: |
+          export THEOS=theos  
           gmake clean package FINALPACKAGE=1
 
       - name: Upload a Build Artifact
