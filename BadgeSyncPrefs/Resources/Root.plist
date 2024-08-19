@@ -16,17 +16,14 @@
                 <key>packageIdentifier</key>
                 <string>com.newwares.badgesync</string>
             </dict>
-            <dict>
-                <key>bundle</key>
-                <string>AltList</string>
                 <key>cell</key>
                 <string>PSLinkListCell</string>
                 <key>detail</key>
                 <string>ATLApplicationListMultiSelectionController</string>
                 <key>key</key>
-                <string>selectedApplications</string>
-                <key>defaults</key>
-                <string>com.opa334.altlisttestbundlelesspreferences</string>
+                <string>enabledApps</string>
+                <key>defaultApplicationSwitchValue</key>
+                <true/>
                 <key>sections</key>
                 <array>
                     <dict>
@@ -34,12 +31,8 @@
                         <string>Visible</string>
                     </dict>
                 </array>
-                <key>isController</key>
-                <true/>
-                <key>overridePrincipalClass</key>
-                <true/>
                 <key>label</key>
-                <string>AltListTestBundlelessPreferences</string>
+                <string>Badges will be synced for these apps</string>
                 <key>useSearchBar</key>
                 <true/>
             </dict>
