@@ -19,12 +19,12 @@
             <dict>
                 <key>cell</key>
                 <string>PSLinkListCell</string>
-                <key>defaults</key>
-                <string>com.newwares.badgesyncprefs</string>
+                <key>subtitle</key>
+                <string>Sync badges for these apps</string>
                 <key>detail</key>
                 <string>ATLApplicationListMultiSelectionController</string>
                 <key>key</key>
-                <string>enabledApps</string>
+                <string>enabledapps</string>
                 <key>defaultApplicationSwitchValue</key>
                 <true />
                 <key>sections</key>
@@ -35,7 +35,7 @@
                     </dict>
                 </array>
                 <key>label</key>
-                <string>Badges will be synced for these apps</string>
+                <string>Enabled apps</string>
                 <key>useSearchBar</key>
                 <true />
             </dict>
