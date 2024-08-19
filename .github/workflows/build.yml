@@ -17,7 +17,7 @@ jobs:
       - name: Cache AltList
         uses: actions/cache@main
         with:
-            path: altlist
+            path: AltList
             key: altlist
       - name: Checkout theos/theos
         if: steps.cache-theos.outputs.cache-hit != 'true'
@@ -33,7 +33,7 @@ jobs:
         with:
           repository: opa334/AltList
           ref: main
-          path: altlist
+          path: AltList
       - name: Checkout theos/sdks
         if: steps.cache-theos.outputs.cache-hit != 'true'
         uses: actions/checkout@main
@@ -48,7 +48,7 @@ jobs:
           brew install make xz ldid
       - name: Install AltList
         run: |
-          (export THEOS=../theos && cd altlist && ./install_to_theos.sh)
+          (export THEOS=../theos && cd AltList && ./install_to_theos.sh)
       - name: Build Package
         run: |
           export THEOS=theos
