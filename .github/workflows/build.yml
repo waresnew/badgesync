@@ -48,7 +48,7 @@ jobs:
           brew install make xz ldid
       - name: Install AltList
         run: |
-          (export THEOS=theos && cd altlist && ./install_to_theos.sh)
+          (export THEOS=theos && cd altlist && ls && echo $THEOS && ./install_to_theos.sh)
       - name: Build Package
         run: |
           export THEOS=theos
