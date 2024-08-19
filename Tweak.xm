@@ -38,7 +38,9 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
         NSString* bundleIdentifier = [self bundleIdentifier];
         if ([blacklist containsObject:bundleIdentifier]) {
             NSLog(@"SETTER: App: %@; blacklisted, skipping", bundleIdentifier);
-            %orig;
+            if (![value isEqualToString:@"BadgeSync"]) { //organic call
+                %orig;
+            }
             return;
         }
         if (!notifCentreEnabled(bundleIdentifier)) {
