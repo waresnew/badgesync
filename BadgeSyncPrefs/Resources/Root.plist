@@ -16,6 +16,7 @@
                 <key>packageIdentifier</key>
                 <string>com.newwares.badgesync</string>
             </dict>
+            <dict>
                 <key>cell</key>
                 <string>PSLinkListCell</string>
                 <key>detail</key>
