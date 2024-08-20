@@ -40,9 +40,6 @@
 @end
 
 @interface BBSectionInfo : NSObject
-{
-    NSMutableDictionary* _sectionInfoByID;
-}
 @property BBSectionInfoSettings* readableSettings;
 @end
 

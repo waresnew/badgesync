@@ -19,11 +19,11 @@ jobs:
         with:
             path: AltList
             key: altlist
-      - name: Checkout theos/theos
+      - name: Checkout roothide/theos
         if: steps.cache-theos.outputs.cache-hit != 'true'
         uses: actions/checkout@main
         with:
-          repository: theos/theos
+          repository: roothide/theos
           ref: master
           submodules: recursive
           path: theos
@@ -41,6 +41,7 @@ jobs:
           repository: theos/sdks
           sparse-checkout: |
             iPhoneOS16.5.sdk
+            iPhoneOS15.6.sdk
             iPhoneOS14.5.sdk
           path: theos/sdks
       - name: Install Build Dependencies
@@ -58,8 +59,10 @@ jobs:
         run: |
           export THEOS=theos  
           gmake clean package FINALPACKAGE=1
+          gmake clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+          gmake clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=roothide
 
-      - name: Upload a Build Artifact
+      - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
           path: packages/*.deb
