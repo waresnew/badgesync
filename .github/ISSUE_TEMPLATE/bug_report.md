@@ -7,28 +7,22 @@ assignees: ''
 
 ---
 
-**Describe the bug**
-Please describe what the bug is.
+## Expected Behavior
 
-**To Reproduce**
-Steps to reproduce the behavior:
 
-*For example:*
-> 1. Go to '...'
-> 2. Click on '....'
-> 3. Scroll down to '....'
-> 4. See error
+## Actual Behavior
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
 
-**Screen Recording/Screenshots**
-If applicable, add a screen recording or screenshots to help explain your problem.
+## Steps to Reproduce the Problem
 
-**Smartphone (please complete the following information):**
+  1.
+  1.
+  1.
+
+## Screen Recording/Screenshots
+
+
+## Specs
  - Device: [e.g. iPhone6]
  - OS: [e.g. iOS8.1]
  - Jailbreak [e.g. Dopamine, palera1n]
-
-**Additional context**
-Add any other context about the problem here.
