@@ -15,8 +15,6 @@ Normally, dismissing a notification will keep the badge value the same, requirin
 
 This way, you can manage your notifications solely from the notification center without needing to manually clear your badges as well.
 
-Supports tapping the "Clear" button, swiping left to clear, and clearing all notifications in a group.
-
 ### Usage
 
 By default, all apps' badges will be synced to the notification centre. You can disable this functionality for some apps by going to BadgeSync's preferences in the Settings app. 
