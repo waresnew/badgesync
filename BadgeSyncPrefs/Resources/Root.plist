@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>items</key>
+        <array>
+            <dict>
+                <key>cell</key>
+                <string>PSGroupCell</string>
+                <key>condensed</key>
+                <true />
+                <key>headerCellClass</key>
+                <string>HBPackageNameHeaderCell</string>
+                <key>icon</key>
+                <string>icon.png</string>
+                <key>packageIdentifier</key>
+                <string>com.newwares.badgesync</string>
+            </dict>
+            <dict>
+                <key>cell</key>
+                <string>PSLinkListCell</string>
+                <key>subtitle</key>
+                <string>Sync badges for these apps</string>
+                <key>defaults</key>
+                <string>com.newwares.badgesyncprefs</string>
+                <key>detail</key>
+                <string>ATLApplicationListMultiSelectionController</string>
+                <key>key</key>
+                <string>enabledApps</string>
+                <key>defaultApplicationSwitchValue</key>
+                <true />
+                <key>sections</key>
+                <array>
+                    <dict>
+                        <key>sectionType</key>
+                        <string>Visible</string>
+                    </dict>
+                </array>
+                <key>label</key>
+                <string>Enabled Apps</string>
+                <key>useSearchBar</key>
+                <true />
+                <key>PostNotification</key>
+                <string>com.newwares.badgesyncprefs/ReloadPrefs</string>
+            </dict>
+            <dict>
+                <key>cellClass</key>
+                <string>HBLinkTableCell</string>
+                <key>icon</key>
+                <string>github.png</string>
+                <key>label</key>
+                <string>Star on Github!</string>
+                <key>url</key>
+                <string>http://github.com/waresnew/badgesync</string>
+            </dict>
+            <dict>
+                <key>cellClass</key>
+                <string>HBLinkTableCell</string>
+                <key>icon</key>
+                <string>github.png</string>
+                <key>label</key>
+                <string>Report Bug</string>
+                <key>url</key>
+                <string>https://github.com/waresnew/badgesync/issues/new/choose</string>
+            </dict>
+        </array>
+        <key>title</key>
+        <string>BadgeSync</string>
+    </dict>
+</plist>
