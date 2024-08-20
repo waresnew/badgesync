@@ -1,4 +1,4 @@
-TARGET := iphone:clang:latest:15.0
+TARGET := iphone:clang:16.5:15.0
 INSTALL_TARGET_PROCESSES = SpringBoard
 ARCHS = arm64e
 THEOS_PACKAGE_SCHEME=rootless
@@ -10,5 +10,8 @@ TWEAK_NAME = BadgeSync
 
 BadgeSync_FILES = Tweak.xm
 BadgeSync_CFLAGS = -fobjc-arc
+BadgeSync_EXTRA_FRAMEWORKS += Cephei
 
 include $(THEOS_MAKE_PATH)/tweak.mk
+SUBPROJECTS += BadgeSyncPrefs
+include $(THEOS_MAKE_PATH)/aggregate.mk
