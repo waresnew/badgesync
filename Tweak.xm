@@ -36,17 +36,9 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
 %hook SBApplication
     -(void)setBadgeValue:(id)value { //hook setBadgeValue to prevent apps from reverting badgecount, safe to spam call
         NSString* bundleIdentifier = [self bundleIdentifier];
-        NSString* curValue = [value isKindOfClass:[NSString class]]?value:[value stringValue];
-        if ([blacklist containsObject:bundleIdentifier]) {
-            NSLog(@"SETTER: App: %@; blacklisted, skipping", bundleIdentifier);
-            if (![curValue isEqualToString:@"BadgeSync"]) { //organic call
-                %orig;
-            }
-            return;
-        }
-        if (!notifCentreEnabled(bundleIdentifier)) {
-            NSLog(@"SETTER: App: %@; notif centre disabled, skipping", bundleIdentifier);
-            if (![curValue isEqualToString:@"BadgeSync"]) { //organic call
+        if ([blacklist containsObject:bundleIdentifier] || !notifCentreEnabled(bundleIdentifier)) {
+            NSLog(@"SETTER: App: %@; skipping", bundleIdentifier);
+            if (![value isKindOfClass:[NSString class]] || ![value isEqualToString:@"BadgeSync"]) { //organic call
                 %orig;
             }
             return;

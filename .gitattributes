@@ -1,2 +1,2 @@
-*.xm linguist-language=objc
-*.x linguist-language=objc
+*.xm linguist-language=Objective-C
+*.x linguist-language=Objective-C
