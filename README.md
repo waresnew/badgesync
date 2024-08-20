@@ -19,7 +19,7 @@ Supports tapping the "Clear" button, swiping left to clear, and clearing all not
 
 ### Usage
 
-Just install it and it'll work!
+By default, all apps' badges will be synced to the notification centre. You can disable this functionality for some apps by going to BadgeSync's preferences in the Settings app. 
 
 https://github.com/waresnew/badgesync/assets/45801973/3a772e64-3f96-421b-8c74-f389962bf1e0
 

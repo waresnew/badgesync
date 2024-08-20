@@ -11,9 +11,9 @@
 @end
 
 @interface SBApplication : NSObject
-@property NSString* badgeValue; // nil if no badge
+@property id badgeValue; // nil if no badge, either nsnumber or nsstring
 @property NSString* bundleIdentifier;
-- (void) setBadgeValue:(NSString*)value;
+- (void) setBadgeValue:(id)value;
 @end
 
 @interface NCNotificationGroupList : NSObject
@@ -45,4 +45,11 @@
 
 @interface BBServer : NSObject
 +(NSMutableDictionary*)savedSectionInfo;
+@end
+
+@interface AXNManager //axon compat
++(instancetype)sharedInstance;
+-(void)insertNotificationRequest:(id)req;
+-(void)removeNotificationRequest:(id)req;
+-(void)modifyNotificationRequest:(id)req;
 @end

@@ -1,6 +1,7 @@
 #import <Tweak.h>
 
 NCNotificationStructuredListViewController* notifController;
+NSArray<NSString*>* blacklist;
 
 NSString* badgeSync(NSString* bundleIdentifier) {
     NSMutableArray<NCNotificationRequest*>* notifs = [NSMutableArray new];
@@ -33,11 +34,11 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
 }
 
 %hook SBApplication
-    -(void)setBadgeValue:(NSString*)value { //hook setBadgeValue to prevent apps from reverting badgecount, safe to spam call
+    -(void)setBadgeValue:(id)value { //hook setBadgeValue to prevent apps from reverting badgecount, safe to spam call
         NSString* bundleIdentifier = [self bundleIdentifier];
-        if (!notifCentreEnabled(bundleIdentifier)) {
-            NSLog(@"SETTER: App: %@; notif centre disabled, skipping", bundleIdentifier);
-            if (![value isEqualToString:@"BadgeSync"]) { //organic call
+        if ([blacklist containsObject:bundleIdentifier] || !notifCentreEnabled(bundleIdentifier)) {
+            NSLog(@"SETTER: App: %@; skipping", bundleIdentifier);
+            if (![value isKindOfClass:[NSString class]] || ![value isEqualToString:@"BadgeSync"]) { //organic call
                 %orig;
             }
             return;
@@ -67,6 +68,28 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
 
 %end
 
+%hook AXNManager
+    -(void)removeNotificationRequest:(NCNotificationRequest*)notif {
+        %orig;
+        NSLog(@"Axon Remove: %@", notif.sectionIdentifier);
+        [getApp(notif.sectionIdentifier) setBadgeValue:@"BadgeSync"];
+    }
+    -(void)insertNotificationRequest:(NCNotificationRequest*)notif {
+        %orig;
+        NSLog(@"Axon Insert: %@", notif.sectionIdentifier);
+        [getApp(notif.sectionIdentifier) setBadgeValue:@"BadgeSync"];
+    }
+%end
 
+static void preferencesChanged() {
+    NSUserDefaults* const prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.newwares.badgesyncprefs"];
+	blacklist = [prefs objectForKey:@"enabledApps"]?:@[];
+    NSLog(@"Blacklist: %@", blacklist);
+}
+
+%ctor {
+    preferencesChanged();
+    CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)preferencesChanged, CFSTR("com.newwares.badgesyncprefs/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
+}
 
 

@@ -1,4 +1,4 @@
-name: Build for NewABI
+name: macOS Build
 
 on:
   push:
@@ -14,6 +14,11 @@ jobs:
         with:
           path: theos
           key: theos
+      - name: Cache AltList
+        uses: actions/cache@main
+        with:
+            path: AltList
+            key: altlist
       - name: Checkout roothide/theos
         if: steps.cache-theos.outputs.cache-hit != 'true'
         uses: actions/checkout@main
@@ -22,7 +27,13 @@ jobs:
           ref: master
           submodules: recursive
           path: theos
-
+      - name: Checkout opa334/AltList
+        if: steps.cache-altlist.outputs.cache-hit != 'true'
+        uses: actions/checkout@main
+        with:
+          repository: opa334/AltList
+          ref: main
+          path: AltList
       - name: Checkout theos/sdks
         if: steps.cache-theos.outputs.cache-hit != 'true'
         uses: actions/checkout@main
@@ -36,9 +47,17 @@ jobs:
       - name: Install Build Dependencies
         run: |
           brew install make xz ldid
-      - name: Build Package
+      - name: Install AltList
+        run: |
+          (export THEOS=../theos && cd AltList && ./install_to_theos.sh)
+      - name: Copy AltList Headers
         run: |
           export THEOS=theos
+          mkdir -p $THEOS/include/AltList
+          cp ./AltList/*.h $THEOS/include/AltList
+      - name: Build Package
+        run: |
+          export THEOS=theos  
           gmake clean package FINALPACKAGE=1
           gmake clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
           gmake clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=roothide
