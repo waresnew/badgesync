@@ -1,0 +1,1 @@
+make do THEOS_PACKAGE_SCHEME=rootless

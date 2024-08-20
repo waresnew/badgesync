@@ -14,21 +14,16 @@ jobs:
         with:
           path: theos
           key: theos
-      - name: Cache AltList
-        uses: actions/cache@main
-        with:
-            path: AltList
-            key: altlist
-      - name: Checkout roothide/theos
+      - name: Checkout theos/theos
         if: steps.cache-theos.outputs.cache-hit != 'true'
         uses: actions/checkout@main
         with:
-          repository: roothide/theos
+          repository: theos/theos
           ref: master
           submodules: recursive
           path: theos
       - name: Checkout opa334/AltList
-        if: steps.cache-altlist.outputs.cache-hit != 'true'
+        if: steps.cache-theos.outputs.cache-hit != 'true'
         uses: actions/checkout@main
         with:
           repository: opa334/AltList
@@ -48,9 +43,14 @@ jobs:
         run: |
           brew install make xz ldid
       - name: Install AltList
+        if: steps.cache-theos.outputs.cache-hit != 'true'
         run: |
-          (export THEOS=../theos && cd AltList && ./install_to_theos.sh)
+          export THEOS=../theos
+          cd AltList
+          ./install_to_theos.sh
+          cd ..
       - name: Copy AltList Headers
+        if: steps.cache-theos.outputs.cache-hit != 'true'
         run: |
           export THEOS=theos
           mkdir -p $THEOS/include/AltList
@@ -60,7 +60,6 @@ jobs:
           export THEOS=theos  
           gmake clean package FINALPACKAGE=1
           gmake clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
-          gmake clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=roothide
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
