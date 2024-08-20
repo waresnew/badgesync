@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - name: Cache Theos
+        id: cache-theos
         uses: actions/cache@main
         with:
           path: theos
