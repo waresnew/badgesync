@@ -68,6 +68,19 @@ BOOL notifCentreEnabled(NSString* bundleIdentifier) { //don't set badge to 0 for
 
 %end
 
+%hook AXNManager
+    -(void)removeNotificationRequest:(NCNotificationRequest*)notif {
+        %orig;
+        NSLog(@"Axon Remove: %@", notif.sectionIdentifier);
+        [getApp(notif.sectionIdentifier) setBadgeValue:@"BadgeSync"];
+    }
+    -(void)insertNotificationRequest:(NCNotificationRequest*)notif {
+        %orig;
+        NSLog(@"Axon Insert: %@", notif.sectionIdentifier);
+        [getApp(notif.sectionIdentifier) setBadgeValue:@"BadgeSync"];
+    }
+%end
+
 static void preferencesChanged() {
     NSUserDefaults* const prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.newwares.badgesyncprefs"];
 	blacklist = [prefs objectForKey:@"enabledApps"]?:@[];
