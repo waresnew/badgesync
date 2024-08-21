@@ -7,7 +7,7 @@ include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = BadgeSync
 
-BadgeSync_FILES = Tweak.xm
+BadgeSync_FILES = Tweak.xm Compat.xm
 BadgeSync_CFLAGS = -fobjc-arc
 BadgeSync_EXTRA_FRAMEWORKS += Cephei
 
