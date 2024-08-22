@@ -27,3 +27,6 @@ If you encounter any bugs, feel free to open an [issue](https://github.com/wares
 
 If you found this tweak useful, please give it a star on its [Github repo](https://github.com/waresnew/badgesync)!
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=waresnew/badgesync&type=Date)](https://star-history.com/#waresnew/badgesync&Date)
