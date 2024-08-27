@@ -1,14 +1,31 @@
 #import <Shared.h>
+#import <dlfcn.h>
+#import <objc/runtime.h>
+#import <Compat.h>
+#import <rootless.h>
+
 NCNotificationStructuredListViewController* notifController;
 NSArray<NSString*>* blacklist;
 
-NSString* badgeSync(NSString* bundleIdentifier) {
+NSMutableArray<NCNotificationRequest*>* getNotifs() {
     NSMutableArray<NCNotificationRequest*>* notifs = [NSMutableArray new];
+    if (%c(TKOController)) {
+        NSLog(@"Using Tako notif list");
+        TKOController* tako = [%c(TKOController) sharedInstance];
+        for (TKOBundle* bundle in [tako bundles]) {
+            [notifs addObjectsFromArray:[bundle notifications]];
+        }
+        return notifs;
+    }
     NCNotificationMasterList* masterList = [notifController masterList];
     for(NCNotificationStructuredSectionList* section in [masterList notificationSections]) {
         [notifs addObjectsFromArray:[section allNotificationRequests]];
     }
+    return notifs;
+}
 
+NSString* badgeSync(NSString* bundleIdentifier) {
+    NSMutableArray<NCNotificationRequest*>* notifs = getNotifs();
     NSInteger count = 0;
     for (NCNotificationRequest* notif in notifs) {
         if ([notif.sectionIdentifier isEqualToString:bundleIdentifier]) {
@@ -74,6 +91,8 @@ static void preferencesChanged() {
 }
 
 %ctor {
+    dlopen(ROOT_PATH("/Library/MobileSubstrate/DynamicLibraries/Axon.dylib"), RTLD_NOW);
+    dlopen(ROOT_PATH("/Library/MobileSubstrate/DynamicLibraries/Tako.dylib"), RTLD_NOW);
     preferencesChanged();
     CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), NULL, (CFNotificationCallback)preferencesChanged, CFSTR("com.newwares.badgesyncprefs/ReloadPrefs"), NULL, CFNotificationSuspensionBehaviorDeliverImmediately);
 }
