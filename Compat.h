@@ -1,6 +1,11 @@
 #import <Shared.h>
 
+@interface AXNRequestWrapper
+@property (nonatomic, strong) NCNotificationRequest* request;
+@end
+
 @interface AXNManager //axon compat
+@property (nonatomic, retain) NSMutableDictionary *notificationRequests;
 +(instancetype)sharedInstance;
 -(void)insertNotificationRequest:(id)req;
 -(void)removeNotificationRequest:(id)req;

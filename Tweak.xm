@@ -17,6 +17,16 @@ NSMutableArray<NCNotificationRequest*>* getNotifs() {
         }
         return notifs;
     }
+    if (%c(AXNManager)) {
+        NSLog(@"Using Axon notif list");
+        AXNManager* axon = [%c(AXNManager) sharedInstance];
+        for (NSArray* value in [axon.notificationRequests allValues]) {
+            for (AXNRequestWrapper* req in value) {
+                [notifs addObject:req.request];
+            }
+        }
+        return notifs;
+    }
     NCNotificationMasterList* masterList = [notifController masterList];
     for(NCNotificationStructuredSectionList* section in [masterList notificationSections]) {
         [notifs addObjectsFromArray:[section allNotificationRequests]];
