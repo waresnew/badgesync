@@ -5,7 +5,7 @@
 
 ![Build Workflow](https://github.com/waresnew/badgesync/actions/workflows/build.yml/badge.svg)
 
-[<img src="https://docs.havoc.app/img/badges/get_square.png" width=15% height=15%>](https://havoc.app/package/badgesync)
+[<img width="150" src="https://docs.havoc.app/img/badges/get_square.svg">](https://havoc.app/package/badgesync)
 
 Sync badges with the notification center!
 
